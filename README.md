@@ -5,7 +5,7 @@
 
 <h1>nanotensor</h1>
 
-NanoTensor is a lightweight, easy-to-understand, yet performant neural network framework. Inspired by the work of Ray Solomonoff, a pioneer in algorithmic information theory, NanoTensor seeks to embody the principle that "Intelligence is compression." This framework is designed to make neural network concepts accessible and intuitive, perfect for educational purposes and demonstrative applications.
+This is a lightweight, easy-to-understand, yet performant neural network framework. Inspired by the work of Ray Solomonoff, a pioneer in algorithmic information theory, NanoTensor seeks to embody the principle that "Intelligence is compression." This framework is designed to make neural network concepts accessible and intuitive, perfect for educational purposes and demonstrative applications.
 
 ## Features
 - **Simplicity in Design**: Keeping the API simple and the architecture transparent, NanoTensor is ideal for those beginning their journey in neural network implementation.
