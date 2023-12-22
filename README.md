@@ -1,9 +1,7 @@
 <div align="center">
 
-[![logo](https://raw.githubusercontent.com/masonmahaffey/nanotensor/main/docs/logomain.png)](https://masonmahaffey.com)
+[![logo](https://raw.githubusercontent.com/masonmahaffey/nanotensor/main/docs/logoprimary.png)](https://masonmahaffey.com)
 </div>
-
-nanotensor
 
 ---
 
