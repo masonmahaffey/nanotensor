@@ -1,6 +1,6 @@
 <div align="center">
 
-[![logo](https://raw.githubusercontent.com/masonmahaffey/nanotensor/main/docs/logo.png)](https://masonmahaffey.com)
+[![logo](https://raw.githubusercontent.com/masonmahaffey/nanotensor/main/docs/logo2.png)](https://masonmahaffey.com)
 </div>
 
 # NanoTensor: 
