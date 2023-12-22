@@ -1,12 +1,9 @@
 <div align="center">
 
 [![logo](https://raw.githubusercontent.com/masonmahaffey/nanotensor/main/docs/logo.png)](https://masonmahaffey.com)
-
-nanotensor: An extremely small, and simple neural network for educational purposes. Maintained by Mason Mahaffey.
-
 </div>
 
----
+# NanoTensor: 
 
 NanoTensor is a lightweight, easy-to-understand, yet performant neural network framework. Inspired by the work of Ray Solomonoff, a pioneer in algorithmic information theory, NanoTensor seeks to embody the principle that "Intelligence is compression." This framework is designed to make neural network concepts accessible and intuitive, perfect for educational purposes and demonstrative applications.
 
