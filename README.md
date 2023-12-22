@@ -3,7 +3,7 @@
 [![logo](https://raw.githubusercontent.com/masonmahaffey/nanotensor/main/docs/logomain.png)](https://masonmahaffey.com)
 </div>
 
-<h1>nanotensor</h1>
+nanotensor
 
 ---
 
