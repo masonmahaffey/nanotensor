@@ -43,9 +43,9 @@ class SGD:
 
 # Neural Network class
 class NanoTensor:
-    def __init__(self, layers):
+    def __init__(self, layers, lr=0.01):
         self.layers = layers
-        self.optimizer = SGD(learning_rate=0.01)
+        self.optimizer = SGD(learning_rate=lr)
 
     def predict(self, x):
         for layer in self.layers:
@@ -64,15 +64,17 @@ class NanoTensor:
             self.optimizer.update(layer)
 
 # Example Usage
-net = NanoTensor([Layer(2, 5), Layer(5, 5), Layer(5, 5), Layer(5, 1)])
+learning_rate = 0.001
+layers=[Layer(2, 5), Layer(5, 5), Layer(5, 5), Layer(5, 1)]
+net = NanoTensor(layers, learning_rate)
 
 # XOR Example
 input_data = np.array([[0, 1], [1, 0], [0, 0], [1, 1]])
 target = np.array([[1], [1], [0], [1]])
 
 # Training loop
-epochs = 5000
-learning_rate = 0.001
+epochs = 100000
+
 for epoch in range(epochs):
     # Forward pass
     predictions = net.predict(input_data)
