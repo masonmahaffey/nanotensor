@@ -42,7 +42,7 @@ class SGD:
         layer.bias -= self.learning_rate * layer.gradient_bias.reshape(layer.bias.shape)
 
 # Neural Network class
-class NeuralNetwork:
+class NanoTensor:
     def __init__(self):
         self.layers = [Layer(3, 5), Layer(5, 2)]
         self.optimizer = SGD(learning_rate=0.01)
@@ -55,7 +55,7 @@ class NeuralNetwork:
     def compute_loss(self, y_true, y_pred):
         return mse_loss(y_true, y_pred)
 
-    def backward(self, gradient_output):
+    def backpropagate(self, gradient_output):
         for layer in reversed(self.layers):
             gradient_output = layer.backward(gradient_output)
 
@@ -64,7 +64,7 @@ class NeuralNetwork:
             self.optimizer.update(layer)
 
 # Example usage for training
-network = NeuralNetwork()
+nt = NanoTensor()
 input_data = np.array([[0.1, 0.2, 0.3]])
 target = np.array([[1, 0]])
 
@@ -73,18 +73,18 @@ epochs = 150
 learning_rate = 0.01
 for epoch in range(epochs):
     # Forward pass
-    predictions = network.predict(input_data)
-    loss = network.compute_loss(target, predictions)
+    predictions = nt.predict(input_data)
+    loss = nt.compute_loss(target, predictions)
 
     # Backpropagation
     gradient_output = 2 * (predictions - target)  # Gradient of MSE loss
-    network.backward(gradient_output)
+    nt.backpropagate(gradient_output)
 
     # Weight update using SGD optimizer
-    network.update_weights()
+    nt.update_weights()
 
     # if epoch % 100 == 0:
         # print(f"Epoch {epoch}, Loss: {loss}")
     print(f"Epoch {epoch}, Loss: {loss}")
 
-print("Final Predictions:", network.predict(input_data))
+print("Final Predictions:", nt.predict(input_data))
