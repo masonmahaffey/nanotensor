@@ -43,8 +43,8 @@ class SGD:
 
 # Neural Network class
 class NanoTensor:
-    def __init__(self):
-        self.layers = [Layer(3, 5), Layer(5, 2)]
+    def __init__(self, layers):
+        self.layers = layers
         self.optimizer = SGD(learning_rate=0.01)
 
     def predict(self, x):
@@ -63,28 +63,30 @@ class NanoTensor:
         for layer in self.layers:
             self.optimizer.update(layer)
 
-# Example usage for training
-nt = NanoTensor()
-input_data = np.array([[0.1, 0.2, 0.3]])
-target = np.array([[1, 0]])
+# Example Usage
+net = NanoTensor([Layer(2, 5), Layer(5, 1)])
+
+# XOR Example
+input_data = np.array([[0, 1], [1, 0], [0, 0], [1, 1]])
+target = np.array([[1], [1], [0], [1]])
 
 # Training loop
-epochs = 150
-learning_rate = 0.01
+epochs = 100000
+learning_rate = 0.001
 for epoch in range(epochs):
     # Forward pass
-    predictions = nt.predict(input_data)
-    loss = nt.compute_loss(target, predictions)
+    predictions = net.predict(input_data)
+    loss = net.compute_loss(target, predictions)
 
     # Backpropagation
     gradient_output = 2 * (predictions - target)  # Gradient of MSE loss
-    nt.backpropagate(gradient_output)
+    net.backpropagate(gradient_output)
 
     # Weight update using SGD optimizer
-    nt.update_weights()
+    net.update_weights()
 
     # if epoch % 100 == 0:
         # print(f"Epoch {epoch}, Loss: {loss}")
     print(f"Epoch {epoch}, Loss: {loss}")
 
-print("Final Predictions:", nt.predict(input_data))
+print("Final Predictions:", net.predict(input_data))
