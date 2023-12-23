@@ -47,7 +47,7 @@ class NeuralNetwork:
         self.layers = [Layer(3, 5), Layer(5, 2)]
         self.optimizer = SGD(learning_rate=0.01)
 
-    def forward(self, x):
+    def predict(self, x):
         for layer in self.layers:
             x = relu(layer.forward(x))
         return x
@@ -69,11 +69,11 @@ input_data = np.array([[0.1, 0.2, 0.3]])
 target = np.array([[1, 0]])
 
 # Training loop
-epochs = 10
+epochs = 150
 learning_rate = 0.01
 for epoch in range(epochs):
     # Forward pass
-    predictions = network.forward(input_data)
+    predictions = network.predict(input_data)
     loss = network.compute_loss(target, predictions)
 
     # Backpropagation
@@ -83,7 +83,8 @@ for epoch in range(epochs):
     # Weight update using SGD optimizer
     network.update_weights()
 
-    if epoch % 100 == 0:
-        print(f"Epoch {epoch}, Loss: {loss}")
+    # if epoch % 100 == 0:
+        # print(f"Epoch {epoch}, Loss: {loss}")
+    print(f"Epoch {epoch}, Loss: {loss}")
 
-print("Final Predictions:", network.forward(input_data))
+print("Final Predictions:", network.predict(input_data))
