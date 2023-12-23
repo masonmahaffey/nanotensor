@@ -64,14 +64,14 @@ class NanoTensor:
             self.optimizer.update(layer)
 
 # Example Usage
-net = NanoTensor([Layer(2, 5), Layer(5, 1)])
+net = NanoTensor([Layer(2, 5), Layer(5, 5), Layer(5, 5), Layer(5, 1)])
 
 # XOR Example
 input_data = np.array([[0, 1], [1, 0], [0, 0], [1, 1]])
 target = np.array([[1], [1], [0], [1]])
 
 # Training loop
-epochs = 100000
+epochs = 5000
 learning_rate = 0.001
 for epoch in range(epochs):
     # Forward pass
