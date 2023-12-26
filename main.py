@@ -12,6 +12,10 @@ def linear(x):
 def mse_loss(y_true, y_pred):
     return ((y_true - y_pred) ** 2).mean()
 
+ # Gradient of MSE
+def mse_gradient(y_true, y_pred):
+    return 2 * (y_pred - y_true)
+
 # SGD optimizer
 class SGD:
     def __init__(self, learning_rate):
@@ -25,6 +29,7 @@ class SGD:
 # Define a simple linear layer
 class Layer:
     def __init__(self, input_size, output_size):
+        # With the example it's a 2x5 matrix of weights with each input feature having one neuron with a connection
         self.weights = np.random.randn(input_size, output_size) * 0.1
         self.bias = np.zeros(output_size)
         self.input = None
@@ -34,8 +39,7 @@ class Layer:
 
     def forward(self, input):
         self.input = input
-        # This creates a dense layer connecting every neuron in the previous layer to the current layer
-        # via a weight matrix of size input_size x output_size
+        # Creates a dense layer and allows us to compute all samples at once
         self.output = np.dot(input, self.weights) + self.bias
         return self.output
 
@@ -66,12 +70,9 @@ class NanoTensor:
                 x = relu(layer.forward(x))
         return x
 
-    def compute_loss(self, y_true, y_pred):
-        return mse_loss(y_true, y_pred)
-
-    def backpropagate(self, gradient_output):
+    def backpropagate(self, multidim_slope):
         for layer in reversed(self.layers):
-            gradient_output = layer.backward(gradient_output)
+            multidim_slope = layer.backward(multidim_slope)
 
     def update_weights(self):
         for layer in self.layers:
@@ -83,20 +84,21 @@ layers=[Layer(2, 5), Layer(5, 10), Layer(10, 5), Layer(5, 1)]
 net = NanoTensor(layers, learning_rate)
 
 # XOR Example
-input_data = np.array([[0, -1], [-1, 0], [0, 0], [-1, -1]])
-target = np.array([[-1], [-1], [0], [-1]])
+input_data = np.array([[0, 1], [1, 0], [0, 0], [1, 1]])
+target = np.array([[1], [1], [0], [1]])
 
 # Training loop
-epochs = 100000
+epochs = 70000
 
 for epoch in range(epochs):
     # Forward pass
     predictions = net.predict(input_data)
-    loss = net.compute_loss(target, predictions)
+    # Mean squared error loss to measure model prediction performance
+    loss = mse_loss(target, predictions)
 
     # Backpropagation
-    gradient_output = 2 * (predictions - target)  # Gradient of MSE loss
-    net.backpropagate(gradient_output)
+    multidim_slope = mse_gradient(target, predictions) # The gradient of the loss, applies only to the output layer
+    net.backpropagate(multidim_slope)
 
     # Weight update using SGD optimizer
     net.update_weights()
