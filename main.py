@@ -36,6 +36,45 @@ class SGD:
             layer.gamma -= self.learning_rate * layer.gamma_gradients
             layer.beta -= self.learning_rate * layer.beta_gradients
 
+class Adam:
+    def __init__(self, learning_rate=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-8):
+        self.learning_rate = learning_rate
+        self.beta_1 = beta_1
+        self.beta_2 = beta_2
+        self.epsilon = epsilon
+        self.m = {}
+        self.v = {}
+        self.t = 0
+
+    def update(self, layer):
+        # Initialize m and v for each layer if not already done
+        if layer not in self.m:
+            self.m[layer] = [np.zeros_like(layer.weights), np.zeros_like(layer.bias)]
+            self.v[layer] = [np.zeros_like(layer.weights), np.zeros_like(layer.bias)]
+
+        self.t += 1
+
+        # Update biased first moment estimate and biased second raw moment estimate
+        self.m[layer][0] = self.beta_1 * self.m[layer][0] + (1 - self.beta_1) * layer.weight_gradients
+        self.m[layer][1] = self.beta_1 * self.m[layer][1] + (1 - self.beta_1) * layer.bias_gradients
+
+        self.v[layer][0] = self.beta_2 * self.v[layer][0] + (1 - self.beta_2) * (layer.weight_gradients ** 2)
+        self.v[layer][1] = self.beta_2 * self.v[layer][1] + (1 - self.beta_2) * (layer.bias_gradients ** 2)
+
+        # Compute bias-corrected first moment estimate and second raw moment estimate for weights
+        m_hat_weight = self.m[layer][0] / (1 - self.beta_1 ** self.t)
+        v_hat_weight = self.v[layer][0] / (1 - self.beta_2 ** self.t)
+
+        # Update weights
+        layer.weights -= self.learning_rate * m_hat_weight / (np.sqrt(v_hat_weight) + self.epsilon)
+
+        # Compute bias-corrected first moment estimate and second raw moment estimate for bias
+        m_hat_bias = self.m[layer][1].reshape(layer.bias.shape) / (1 - self.beta_1 ** self.t)
+        v_hat_bias = self.v[layer][1].reshape(layer.bias.shape) / (1 - self.beta_2 ** self.t)
+
+        # Update biases
+        layer.bias -= self.learning_rate * m_hat_bias / (np.sqrt(v_hat_bias) + self.epsilon)
+
 # Define a simple linear layer
 class Layer:
     def __init__(self, input_size, output_size, use_batchnorm=False):
@@ -95,9 +134,9 @@ class Layer:
 
 # Neural Network class
 class NanoTensor:
-    def __init__(self, layers, lr=0.01):
+    def __init__(self, layers, learning_rate=0.01, optimizer=SGD):
         self.layers = layers
-        self.optimizer = SGD(learning_rate=lr)
+        self.optimizer = optimizer(learning_rate=learning_rate)
 
     def predict(self, x):
         # Here we need to use a different activation function than ReLU for the output
@@ -122,9 +161,14 @@ class NanoTensor:
             self.optimizer.update(layer)
 
 # Example Usage
-learning_rate = 0.0005
-layers = [Layer(2, 5, use_batchnorm=True), Layer(5, 10, use_batchnorm=True), Layer(10, 10, use_batchnorm=True), Layer(10, 5, use_batchnorm=True), Layer(5, 1)]
-net = NanoTensor(layers, learning_rate)
+layers = [
+    Layer(2, 5, use_batchnorm=True), 
+    Layer(5, 10, use_batchnorm=True), 
+    Layer(10, 10, use_batchnorm=True), 
+    Layer(10, 5, use_batchnorm=True), 
+    Layer(5, 1)
+]
+net = NanoTensor(layers, learning_rate=0.00001, optimizer=Adam)
 
 # XOR Example
 input_data = np.array([[0, 1], [1, 0], [0, 0], [1, 1]])
