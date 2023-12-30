@@ -1,6 +1,8 @@
 import sys
 import os
 
+# TODO: Fix this example by updating implementation according to the latest NT changes
+
 current_script_path = os.path.dirname(os.path.abspath(__file__))
 parent_directory = os.path.dirname(current_script_path)
 sys.path.append(parent_directory)
