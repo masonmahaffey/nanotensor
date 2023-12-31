@@ -125,8 +125,6 @@ class Layer:
             self.running_var = np.zeros(output_size)
         self.gamma_gradients = None
         self.beta_gradients = None
-        
-        
     
     def backward(self, gradient_output, gradient_clip, gradient_minimum):
         # Optional: Apply batch normalization gradients if enabled
