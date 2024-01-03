@@ -5,7 +5,7 @@
 
 ---
 
-This is a lightweight, easy-to-understand, unoptimized soon-to-be decently performant neural network framework. Inspired by the work of Ray Solomonoff, a pioneer in algorithmic information theory, nanotensor seeks to embody the principle that "Intelligence is compression." This framework is designed to make neural network concepts accessible and intuitive, perfect for educational purposes and demonstrative applications.
+This is a lightweight, easy-to-understand, unoptimized soon-to-be decently performant neural network framework as well as tensor/autograd library. Inspired by the work of Ray Solomonoff, a pioneer in algorithmic information theory, nanotensor seeks to embody the principle that "Intelligence is compression." This framework is designed to make neural network concepts accessible and intuitive, perfect for educational purposes and demonstrative applications.
 
 ## Features
 - **Simplicity in Design**: Keeping the API simple and the architecture transparent, nanotensor is ideal for those beginning their journey in neural network implementation.
