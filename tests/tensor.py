@@ -12,5 +12,4 @@ from nanotensor.tensor import Tensor
 x = Tensor(2)
 x()
 
-y = x + 2 + 4
-z = x * 2 * 4
+y = x * 2 + 4
